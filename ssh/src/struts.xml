@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+
+
+
+<struts>
+<!-- 
+spring与struts整合
+1.配置常量
+2.  方案一  struts自己管理class
+    方案二  spring 完全管理 ,struts只需要在class里写入 bean  id / name
+    action的创建由spring完成
+ -->
+
+<constant name="struts.objectFactory" value="spring"></constant>
+
+
+ <package name="ssh" namespace="/" extends="struts-default">
+   <action name="action_*" class="userAction" method="{1}">
+     <result name="success" type="dispatcher">/login.jsp</result>
+   </action>
+
+
+
+ </package>
+
+</struts>
+
+
+

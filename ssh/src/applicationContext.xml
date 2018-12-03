@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+ xmlns="http://www.springframework.org/schema/beans"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/tx 
+ http://www.springframework.org/schema/tx/spring-tx.xsd 
+ http://www.springframework.org/schema/aop
+  http://www.springframework.org/schema/aop/spring-aop.xsd">
+  <!-- 整合hibernate到spring
+     spring其实就是管理 sessionFactory
+     
+     方案一  spring管理sessionfactory，
+     方案二 所有配置信息全部交给spring
+   -->
+   <context:property-placeholder location="classpath:db.properties"/>
+     <!-- 引入C3P0连接池 -->
+      <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+          <property name="jdbcUrl" value="${jdbc.url}"></property>
+           <property name="driverClass" value="${jdbc.driver_class}"></property>
+            <property name="user" value="${jdbc.user}"></property>
+             <property name="password" value="${jdbc.password}"></property>
+      
+      </bean>
+      
+
+      
+   <bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+      <!--   方案一
+      <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+      -->
+    
+      <!-- 将C3P0连接池注入到  sessionFactory-->
+      <property name="dataSource" ref="dataSource"></property>
+      <!-- 方案二 -->
+      <property name="hibernateProperties" >
+         <props>
+         <!--  
+            <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+             <prop key="hibernate.connection.url">jdbc:mysql:///ssh</prop>
+              <prop key="hibernate.connection.username">root</prop>
+               <prop key="hibernate.connection.password">123456</prop>
+               
+               -->
+               
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                 <prop key="hibernate.show_sql">true</prop>
+                 <prop key="hibernate.format_sql">true</prop>
+                 <prop key="hibernate.hbm2ddl.auto">update</prop>
+         </props>
+      
+     
+      
+      
+      </property>
+      
+       <!-- 引入元数据 ,指定orm元数据所在的包路劲，spring会自动读取包中的所有配置 -->
+       <property name="mappingDirectoryLocations" value="classpath:com/spring/domain"></property>
+   </bean>
+     <!-- 核心事务管理器 --> 
+   <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+   
+      <!-- 绑定sessionFactory -->
+      
+       <property name="sessionFactory" ref="sessionFactory"></property>
+       
+   </bean> 
+   <!-- 配置通知 --> 
+   
+   <tx:advice id="txAdvice" transaction-manager="transactionManager">
+       <tx:attributes>
+          <tx:method name="query*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true"/>
+          <tx:method name="update*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
+          <tx:method name="save*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
+          <tx:method name="delete*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
+          
+          <tx:method name="get*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true"/>
+       </tx:attributes>
+   </tx:advice>
+   <!-- 配置直入 -->
+   <aop:config>
+   <!-- 配置切点 -->
+      <aop:pointcut expression="execution(* com.spring.service.impl.*ServiceImpl.*(..))" id="pc"/>
+      <!-- 配置切面 -->
+      <aop:advisor advice-ref="txAdvice" pointcut-ref="pc"/>
+      
+   </aop:config>
+   
+   
+   
+   
+   
+    
+  
+  <bean id="userAction" class="com.spring.action.UserAction"></bean>
+  
+  <bean id="user" class="com.spring.domain.User"></bean>
+  <!-- service -->
+  <bean id="us" class="com.spring.service.impl.UserServiceImpl"></bean>
+  
+  <!-- dao -->
+  <bean id="userDao" class="com.spring.dao.impl.UserDaoImpl">
+      <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+
+
+
+
+</beans>
