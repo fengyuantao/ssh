@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.spring.domain">
+    <class name="LinkMan" table="linkman">
+        <id name="id" column="id">
+        
+            <generator class="native"></generator>
+        </id>
+        
+        <property name="name" column="name"></property>
+        <property name="sex" column="sex"></property>
+        <property name="officePhone" column="officephone"></property>
+        <property name="mobilePhone" column="mobilephone"></property>
+        
+            <!-- 
+         name 属性
+         column 外键列名、
+         class 与我关联的对象完整类名
+            级联操作：cascade: save-update/delete/all
+          inverse: 配置关系是否维护 性能提升  必须至少有一方需要维护
+          
+         -->
+        <many-to-one name="customer" column="cid" class="Customer" lazy="false" fetch="join"></many-to-one>
+        
+        
+    </class>
+
+</hibernate-mapping>
