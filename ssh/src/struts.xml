@@ -20,6 +20,11 @@ spring与struts整合
    <action name="action_*" class="userAction" method="{1}">
      <result name="success" type="dispatcher">/login.jsp</result>
    </action>
+   
+    <action name="addCustomer" class="addCustomerAction" method="addCustomer">
+     <result name="success" type="dispatcher">/jsp/success.jsp</result>
+     <result name="error" type="dispatcher">/jsp/error.jsp</result>
+   </action>
 
 
 

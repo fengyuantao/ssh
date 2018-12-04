@@ -62,6 +62,7 @@
       
        <!-- 引入元数据 ,指定orm元数据所在的包路劲，spring会自动读取包中的所有配置 -->
        <property name="mappingDirectoryLocations" value="classpath:com/spring/domain"></property>
+
    </bean>
      <!-- 核心事务管理器 --> 
    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
@@ -79,7 +80,7 @@
           <tx:method name="update*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
           <tx:method name="save*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
           <tx:method name="delete*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
-          
+          <tx:method name="add*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
           <tx:method name="get*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true"/>
        </tx:attributes>
    </tx:advice>
@@ -97,19 +98,27 @@
    
    
     
-  
+  <!-- action -->
   <bean id="userAction" class="com.spring.action.UserAction"></bean>
+  <bean id="addCustomerAction" class="com.spring.action.AddCustomerAction"></bean>
   
+  <!-- domain -->
   <bean id="user" class="com.spring.domain.User"></bean>
+  <bean id="linkMan" class="com.spring.domain.LinkMan"></bean>
+  <bean id="customer" class="com.spring.domain.Customer"></bean>
+  
   <!-- service -->
   <bean id="us" class="com.spring.service.impl.UserServiceImpl"></bean>
+  <bean id="customerService" class="com.spring.service.impl.CustomerServiceImpl"></bean>
+  
   
   <!-- dao -->
   <bean id="userDao" class="com.spring.dao.impl.UserDaoImpl">
       <property name="sessionFactory" ref="sessionFactory"></property>
   </bean>
-
-
-
+  
+   <bean id="customerDao" class="com.spring.dao.impl.CustomerDaoImpl">
+      <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
 
 </beans>
