@@ -33,7 +33,7 @@ public class AddCustomerAction extends ActionSupport implements ModelDriven{
 		
 		CustomerService cs = (CustomerService)GetBeanWithName.getObject("customerService");
 		
-			cs.addCustomer(customer);
+		cs.addCustomer(customer);
 		
 		
 		

@@ -99,8 +99,12 @@
    
     
   <!-- action -->
-  <bean id="userAction" class="com.spring.action.UserAction"></bean>
-  <bean id="addCustomerAction" class="com.spring.action.AddCustomerAction"></bean>
+  <bean id="userAction" class="com.spring.action.UserAction" scope="prototype"></bean>
+  <bean id="addCustomerAction" class="com.spring.action.AddCustomerAction" scope="prototype"></bean>
+  <bean id="customerAction" class="com.spring.action.CustomerAction" scope="prototype">
+     
+     <property name="cs" ref="customerService"></property>
+  </bean>
   
   <!-- domain -->
   <bean id="user" class="com.spring.domain.User"></bean>
@@ -109,7 +113,10 @@
   
   <!-- service -->
   <bean id="us" class="com.spring.service.impl.UserServiceImpl"></bean>
-  <bean id="customerService" class="com.spring.service.impl.CustomerServiceImpl"></bean>
+  <bean id="customerService" class="com.spring.service.impl.CustomerServiceImpl">
+    <property name="customerDao" ref="customerDao"></property>
+  
+  </bean>
   
   
   <!-- dao -->

@@ -25,7 +25,7 @@
 </HEAD>
 <BODY>
 	<FORM id="customerForm" name="customerForm"
-		action="${pageContext.request.contextPath }/customerAction_list"
+		action="${pageContext.request.contextPath }/customerAction_CustomerList"
 		method=post>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
@@ -64,10 +64,10 @@
 												<TR>
 													<TD>客户名称：</TD>
 													<TD><INPUT class=textbox id=sChannel2
-														style="WIDTH: 80px" maxLength=50 name="cname" value="${param.cname}"></TD>
+														style="WIDTH: 80px" maxLength=50 name="cname" value="${ cname}"></TD>
 													
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2></TD>
+														value="筛选 " ></TD>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -90,26 +90,26 @@
 													<TD>手机</TD>
 													<TD>操作</TD>
 												</TR>
-												<s:iterator value="#list" var="cust" >
+												<s:iterator value="#pages.list" var="cust" >
 												<TR 		
 													style="FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none">
 													<TD>
-														<s:property value="#cust.cust_name" />
+														<s:property value="#cust.cname" />
 													</TD>
 													<TD>
-													<s:property value="#cust.cust_level" />
+													<s:property value="#cust.clevel" />
 													</TD>
 													<TD>
-													<s:property value="#cust.cust_source" />
+													<s:property value="#cust.sourceFrom" />
 													</TD>
 													<TD>
-													<s:property value="#cust.cust_linkman" />
+													<s:property value="#cust.linkMan" />
 													</TD>
 													<TD>
-													<s:property value="#cust.cust_phone" />
+													<s:property value="#cust.officePhone" />
 													</TD>
 													<TD>
-													<s:property value="#cust.cust_mobile" />
+													<s:property value="#cust.mobilePhone" />
 													</TD>
 													<TD>
 													<a href="${pageContext.request.contextPath }/customerServlet?method=edit&custId=${customer.cust_id}">修改</a>
@@ -173,19 +173,19 @@
 									<TD><SPAN id=pagelink>
 											<DIV
 												style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
-												共[<B>${total}</B>]条记录,[<B>${totalPage}</B>]页
+												共[<B>${pages.totalCount}</B>]条记录,[<B>${pages.totalPage}</B>]页
 												,每页显示
 												<select name="pageSize">
 												
-												<option value="15" <c:if test="${pageSize==1 }">selected</c:if>>1</option>
-												<option value="30" <c:if test="${pageSize==30 }">selected</c:if>>30</option>
+												<option value="15" <c:if test="${pageCount==1 }">selected</c:if>>1</option>
+												<option value="5" <c:if test="${pageCount==5 }">selected</c:if>>5</option>
 												</select>
 												条
-												[<A href="javascript:to_page(${page-1})">前一页</A>]
-												<B>${page}</B>
-												[<A href="javascript:to_page(${page+1})">后一页</A>] 
+												[<A href="javascript:to_page(${currentPage-1})">前一页</A>]
+												<B>${currentPage}</B>
+												[<A href="javascript:to_page(${currentPage+1})">后一页</A>] 
 												到
-												<input type="text" size="3" id="page" name="page" />
+												<input type="text" size="3" id="page" name="page" value=""/>
 												页
 												
 												<input type="button" value="Go" onclick="to_page()"/>
