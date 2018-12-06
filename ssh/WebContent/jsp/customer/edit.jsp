@@ -55,7 +55,7 @@
 								<td>客户级别 ：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="custLevel" value="${customer.custLevel }">
+														style="WIDTH: 180px" maxLength=50 name="custLevel" value="${customer.custLevel.BaseDict.dict_item_nmae }">
 								</td>
 							</TR>
 							
@@ -63,7 +63,7 @@
 								<td>信息来源：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="custSource" value="${customer.custSource }">
+														style="WIDTH: 180px" maxLength=50 name="custSource" value="${customer.custSource.BaseDict.dict_item_nmae }">
 								</td>
 								<td>联系人：</td>
 								<td>

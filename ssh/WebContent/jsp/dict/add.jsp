@@ -9,23 +9,17 @@
 <LINK href="${pageContext.request.contextPath }/css/Style.css" type=text/css rel=stylesheet>
 <LINK href="${pageContext.request.contextPath }/css/Manage.css" type=text/css
 	rel=stylesheet>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/dict.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript">
 
-    $(document).ready(function(){
-    	addselect("1002","clevel","clevel.dict_id",2);
-    	addselect("1001","sourceFrom","sourceFrom.dict_id","");
-    	addselect("1003","cust_industry","cust_industry.dict_id",4);
-    });
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.4.4.min.js"></script>
+
+
 
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
 	<FORM id=form1 name=form1
-		action="${pageContext.request.contextPath }/addCustomer"
+		action="${pageContext.request.contextPath }/addDict"
 		method=post>
 		
 
@@ -49,7 +43,7 @@
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
 							<TR>
-								<TD class=manageHead>当前位置：客户管理 &gt; 添加客户</TD>
+								<TD class=manageHead>当前位置：数据字典 &gt; 添加字典</TD>
 							</TR>
 							<TR>
 								<TD height=2></TD>
@@ -60,50 +54,44 @@
 						  
 						    
 							<TR>
-								<td>客户名称：</td>
+								<td>字典代码：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="cname">
+														style="WIDTH: 180px" maxLength=50 name="dict_type_code">
 								</td>
-								<td>客户级别 ：</td>
+								<td>字典名称：</td>
 								<td id="clevel">
-							
+							        <INPUT class=textbox id=sChannel2
+														style="WIDTH: 180px" maxLength=50 name="dict_type_name">
+								</td>
 								</td>
 							</TR>
 							
 							<TR>
 								
-								<td>信息来源 ：</td>
+								<td>字典说明 ：</td>
 								<td id="sourceFrom">
-								
+								   <INPUT class=textbox id=sChannel2
+														style="WIDTH: 180px" maxLength=50 name="dict_item_name">
+								</td>
 								</td>
 								
-								<td>客户行业：</td>
+								<td>是否使用：</td>
 								<td id="cust_industry">
-								
+								   是 <INPUT class=textbox id=sChannel2 type="radio" value="1"
+														style="WIDTH: 80px" maxLength=50 name="dict_enable">
+								否 <INPUT class=textbox id=sChannel2 type="radio" value="0"
+														style="WIDTH: 80px" maxLength=50 name="dict_enable">
+								</td>
 								</td>
 								
-								<td>联系人：</td>
+								<td>字典模型：</td>
 								<td>
 								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="linkMan">
+														style="WIDTH: 180px" maxLength=50 name="dict_memo">
 								</td>
 							</TR>
 							
-							<TR>
-								
-								
-								<td>固定电话 ：</td>
-								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="officePhone">
-								</td>
-								<td>移动电话 ：</td>
-								<td>
-								<INPUT class=textbox id=sChannel2
-														style="WIDTH: 180px" maxLength=50 name="mobilePhone">
-								</td>
-							</TR>
 							
 							<tr>
 								<td rowspan=2>

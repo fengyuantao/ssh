@@ -18,7 +18,7 @@ public class AddCustomerAction extends ActionSupport implements ModelDriven{
 	
 	@Override
 	public Object getModel() {
-		// TODO Auto-generated method stub
+		
 		return customer;
 	}
 	
@@ -30,10 +30,16 @@ public class AddCustomerAction extends ActionSupport implements ModelDriven{
 		
 		CustomerService cs = (CustomerService) ac.getBean("customerService");
 		*/
-		
-		CustomerService cs = (CustomerService)GetBeanWithName.getObject("customerService");
-		
-		cs.addCustomer(customer);
+		try {
+			System.out.println("-------新增客户方法调用---------");
+			System.out.println(customer.toString());
+			CustomerService cs = (CustomerService)GetBeanWithName.getObject("customerService");
+			
+			cs.addCustomer(customer);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService{
 	public void addCustomer(Customer c) {
 		// add a new  customer 
 		CustomerDao dao = (CustomerDao) GetBeanWithName.getObject("customerDao");
-		dao.addCustomer(c);
+		dao.save(c);
 		
 	}
 
@@ -29,13 +29,13 @@ public class CustomerServiceImpl implements CustomerService{
 		PageBean pageBean = null;
 		try {
 			// 根据条件获取customer数据
-			Integer totalCount = customerDao.getCustomerCountByName(dc);
+			Integer totalCount = customerDao.getTotalCount(dc);
 			System.out.println("customer总条数：" + totalCount);
 			System.out.println("创建pageBean对象");
 			pageBean = new PageBean(currentPage, pageCount, totalCount);
 			// 根据pageBean里的数据查询customer列表
 			System.out.println("根据pageBean里的数据查询customer列表");
-			List customets = customerDao.getCustomerListByName(dc, pageBean);
+			List customets = customerDao.getObjectsList(dc, pageBean.getStartIndex(), pageBean.getPageCount());
 			pageBean.setList(customets);
 		} catch (Exception e) {
 			// TODO: handle exception

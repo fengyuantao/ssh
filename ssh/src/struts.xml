@@ -18,7 +18,7 @@ spring与struts整合
 
  <package name="ssh" namespace="/" extends="struts-default">
  <global-exception-mappings>
-			<exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
+ <exception-mapping result="error" exception="java.lang.RuntimeException"></exception-mapping>
 	</global-exception-mappings>
    <action name="action_*" class="userAction" method="{1}">
      <result name="success" type="dispatcher">/login.jsp</result>
@@ -34,6 +34,18 @@ spring与struts整合
    
    </action>
 
+ <action name="baseDictAction_*" class="baseDictAction" method="{1}">
+     <result name="success" type="dispatcher">/jsp/dict/list.jsp</result>
+   
+   </action>
+   
+   <action name="addDict" class="dictAction" method="AddDict">
+     <result name="success" type="dispatcher">/jsp/dict/list.jsp</result>
+     <result name="error" type="dispatcher">/jsp/error.jsp</result>
+   
+   </action>
+   
+   
  </package>
 
 </struts>

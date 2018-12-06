@@ -120,6 +120,8 @@ A.active {
 					<TD vAlign=top width=180 bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=3 width=165 align=center border=0>
 							<TBODY>
+		
+							
 								<TR>
 									<TD class=mainMenu onClick="MenuDisplay('table_1');"><SPAN
 										class=span id=table_1Span>＋</SPAN> 客户管理</TD>
@@ -245,6 +247,31 @@ A.active {
 										</TABLE>
 									</TD>
 								</TR>
+								<TR>
+									<TD background=images/new_027.jpg height=1></TD>
+								</TR>
+								
+								<TR>
+									<TD class=mainMenu onClick="MenuDisplay('table_7');"><SPAN
+										class=span id=table_7Span>＋</SPAN> 数据字典</TD>
+								</TR>
+								<TR>
+									<TD>
+										<TABLE id=table_7 style="DISPLAY: none" cellSpacing=0
+											cellPadding=2 width=155 align=center border=0>
+											<TBODY>
+												<TR>
+													<TD class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/baseDictAction_getBaseDictList" 
+														target=main>－ 维护字典</A></TD>
+												</TR>
+											
+												
+											</TBODY>
+										</TABLE>
+									</TD>
+								</TR>
+								
+								
 								<TR>
 									<TD background=images/new_027.jpg height=1></TD>
 								</TR>

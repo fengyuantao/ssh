@@ -10,11 +10,15 @@
         </id>
      
         <property name="cname" column="cname"></property>
-        <property name="clevel" column="clevel"></property>
-        <property name="sourceFrom" column="sourcefrom"></property>
-        <property name="linkMan" column="linkman"></property>
+        <!-- <property name="clevel" column="clevel"></property>
+        <property name="sourceFrom" column="sourcefrom"></property>-->
+        <property name="linkMan" column="linkman"></property> 
         <property name="officePhone" column="officephone"></property>
         <property name="mobilePhone" column="mobilephone"></property>
+        
+        <many-to-one name="clevel" column="clevel" class="BaseDict"></many-to-one>
+        <many-to-one name="sourceFrom" column="sourcefrom" class="BaseDict"></many-to-one>
+        <many-to-one name="cust_industry" column="cust_industry" class="BaseDict"></many-to-one>
      </class>
     
     

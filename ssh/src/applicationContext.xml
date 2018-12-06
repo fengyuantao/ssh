@@ -105,16 +105,32 @@
      
      <property name="cs" ref="customerService"></property>
   </bean>
+  <bean id="baseDictAction" class="com.spring.action.BaseDictAction" scope="prototype">
+      <property name="bs" ref="baseDictService"></property>
+  </bean>
+  
+   <bean id="dictAction" class="com.spring.action.DictAction" scope="prototype">
+      <property name="bs" ref="baseDictService"></property>
+  </bean>
+ 
   
   <!-- domain -->
   <bean id="user" class="com.spring.domain.User"></bean>
   <bean id="linkMan" class="com.spring.domain.LinkMan"></bean>
   <bean id="customer" class="com.spring.domain.Customer"></bean>
+  <bean id="baseDict" class="com.spring.action.BaseDictAction"></bean>
+
+  
   
   <!-- service -->
   <bean id="us" class="com.spring.service.impl.UserServiceImpl"></bean>
   <bean id="customerService" class="com.spring.service.impl.CustomerServiceImpl">
     <property name="customerDao" ref="customerDao"></property>
+  
+  </bean>
+  
+   <bean id="baseDictService" class="com.spring.service.impl.BaseDictServiceImpl">
+    <property name="baseDictDao" ref="baseDictDao"></property>
   
   </bean>
   
@@ -125,6 +141,9 @@
   </bean>
   
    <bean id="customerDao" class="com.spring.dao.impl.CustomerDaoImpl">
+      <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <bean id="baseDictDao" class="com.spring.dao.impl.BaseDictDaoImpl">
       <property name="sessionFactory" ref="sessionFactory"></property>
   </bean>
 
