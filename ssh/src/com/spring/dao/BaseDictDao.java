@@ -9,4 +9,6 @@ import com.spring.domain.BaseDict;
 public interface BaseDictDao extends BaseDao{
 
 	List<BaseDict> getBaseDictList(DetachedCriteria dc);
+
+	BaseDict getObjectById(DetachedCriteria dc);
 }

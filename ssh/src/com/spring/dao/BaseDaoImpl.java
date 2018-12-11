@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.Parameter;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -80,6 +83,23 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		List<T> lists = (List<T>) getHibernateTemplate().findByCriteria(dc, start, pageCount);
 
 		return lists;
+	}
+
+	@Override
+	public void delete(String id) {
+		
+		
+	}
+
+	@Override
+	public void delete(DetachedCriteria dc) {
+		
+		
+		
+
+	
+		
+		
 	}
 
 }

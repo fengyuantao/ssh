@@ -8,9 +8,12 @@ public interface BaseDao<T> {
 
 	void save(T t);
 	void delete(T t);
+	void delete(DetachedCriteria dc);
+	void delete(String id);
 	void delete(Integer id);
 	void update(T t);
 	Integer getTotalCount(DetachedCriteria dc);
 	T getObjectById(Integer id);
 	List<T> getObjectsList(DetachedCriteria dc,Integer start,Integer pageCount);
+	
 }

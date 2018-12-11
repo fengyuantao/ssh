@@ -18,4 +18,16 @@ public class BaseDictDaoImpl extends BaseDaoImpl implements BaseDictDao {
 		return list;
 	}
 
+	@Override
+	public BaseDict getObjectById(DetachedCriteria dc) {
+		// TODO Auto-generated method stub
+		List<BaseDict> list = (List<BaseDict>) getHibernateTemplate().findByCriteria(dc);
+		if(list != null && list.size()>0) {
+			return list.get(0);
+		}
+		else {
+			return null;
+		}
+	}
+
 }

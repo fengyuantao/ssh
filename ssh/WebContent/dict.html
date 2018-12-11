@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		
+			<link rel="stylesheet" type="text/css" href="jquery-easyui-1.2.6/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="jquery-easyui-1.2.6/themes/icon.css">
+	<script type="text/javascript" src="jquery-easyui-1.2.6/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="jquery-easyui-1.2.6/jquery.easyui.min.js"></script>
+	<script>
+	$(function(){
+		<!--页面加载完毕关闭弹窗-->
+		    $('#w').window('close');
+		    $('#u').window('close');
+		    $('#d').window('close');
+		   <!--提交表单-->
+		   
+		   $('#ff').form({    
+			    url:'${pageContext.request.contextPath}/addDict',    
+			    onSubmit: function(){    
+			        // do some check    
+			        // return false to prevent submit; 
+			        return true;
+			    },    
+			    success:function(data){  
+			    	$('#w').window('close');
+			        alert('数据新增成功'); 
+			        $('#test').datagrid('reload');    // 重新载入当前页面数据  
+			        $('#ff').form('clear'); // 清空表单数据
+			        
+			    }    
+			});  
+		   
+		   <!-- 修改数据 -->
+		   $('#update').form({
+			    url:'${pageContext.request.contextPath}/baseDictAction_updateWithId',    
+			    onSubmit: function(){    
+			        // do some check    
+			        // return false to prevent submit; 
+			        return true;
+			    },    
+			    success:function(data){  
+			    	$('#u').window('close');
+			        alert('数据修改成功'); 
+			        $('#test').datagrid('reload');    // 重新载入当前页面数据  
+			        $('#update').form('clear'); // 清空表单数据
+			        clearSelections();
+			    } 
+		   });
+		   
+		   
+		   
+			$('#test').datagrid({
+				title:'数据字典管理',
+				iconCls:'icon-save',
+				singleSelect:false,
+				nowrap: false,
+				striped: true,
+				collapsible:true,
+				url:'http://127.0.0.1:8087/ssh/baseDictAction_execute',
+				sortName: 'dict_id',
+				sortOrder: 'desc',
+				remoteSort: false,
+				idField:'dict_id',
+				frozenColumns:[[
+	                {field:'ck',checkbox:true},
+	                {title:'ID',field:'dict_id',width:180,sortable:true}
+				]],
+				columns:[[
+					{field:'dict_type_code',title:'字典代码',width:120},
+					{field:'dict_type_name',title:'字典名称',width:120,sortable:true,
+						sorter:function(a,b){
+							return (a>b?1:-1);
+						}
+					},
+					{field:'dict_item_code',title:'序列代码',width:150,sortable:true},
+					{field:'dict_item_name',title:'序列名称',width:150,sortable:true},
+					{field:'dict_sort',title:'序列名称',width:150,sortable:true},
+					{field:'dict_enable',title:'是否使用',width:150,sortable:true},
+					{field:'dict_memo',title:'模板名称',width:150,sortable:true}
+				]],
+				pagination:true,
+				rownumbers:true,
+				toolbar:[{
+					id:'btnadd',
+					text:'新增',
+					iconCls:'icon-add',
+					handler:function(){
+						$('#btnsave').linkbutton('enable');
+						
+						$('#w').window('open');
+					}
+				},{
+					id:'btncut',
+					text:'修改',
+					iconCls:'icon-cut',
+					handler:function(){
+						$('#btnsave').linkbutton('enable');
+						var dict_id = getSelected();
+						$('#update').form("load",'{pageContext.request.contextPath}/baseDictAction_updateDict?cust_id='+dict_id);
+						$('#u').window('open');
+						
+					}
+				},{
+					id:'btnsave',
+					text:'删除',
+					
+					iconCls:'icon-remove',
+					handler:function(){
+						
+						
+						$('#btnsave').linkbutton('enable');
+						
+						$('#d').window('open');
+						
+						
+						
+						//$('#w').window('open');
+					}
+				}]
+			});
+			var p = $('#test').datagrid('getPager');
+			$(p).pagination({
+				onBeforeRefresh:function(){
+					alert('before refresh');
+				}
+			});
+		});
+		function resize(){
+			$('#test').datagrid('resize', {
+				width:700,
+				height:400
+			});
+		}
+		
+	function open(){
+			$('#w').window({
+				title: 'New Title',
+				width: 600,
+				modal: true,
+				shadow: false,
+				closed: false,
+				height: 300
+			});
+		}
+
+		
+		
+		function getSelected(){
+			var selected = $('#test').datagrid('getSelected');
+			if (selected){
+				return selected.dict_id;
+			}
+		}
+		function getSelections(){
+			var ids = [];
+			var rows = $('#test').datagrid('getSelections');
+			for(var i=0;i<rows.length;i++){
+				ids.push(rows[i].dict_id);
+			}
+			return ids.join(':');
+		}
+		function clearSelections(){
+			$('#test').datagrid('clearSelections');
+		}
+		function selectRow(){
+			$('#test').datagrid('selectRow',2);
+		}
+		function selectRecord(){
+			$('#test').datagrid('selectRecord','002');
+		}
+		function unselectRow(){
+			$('#test').datagrid('unselectRow',2);
+		}
+		function mergeCells(){
+			$('#test').datagrid('mergeCells',{
+				index:2,
+				field:'addr',
+				rowspan:2,
+				colspan:2
+			});
+		}
+		function canscal(){
+			$('#d').window('close');
+			//var ids = getSelections();
+		}
+		function deletes(){
+			var ids = getSelections();
+			$.ajax({
+				url:"${pageContext.request.contextPath}/baseDictAction_deleteDicts",
+				data:{"dicts":ids},
+				Type:"post",
+				success:function(data){
+					$('#d').window('close');
+					alert("删除成功");
+					 $('#test').datagrid('reload');    // 重新载入当前页面数据  
+				}
+			});
+		}
+	</script>
+	
+	
+	</head>
+	<body>
+		
+        <table id="test"></table>
+
+      <!-- ........... open window........... -->
+    <div id="w" class="easyui-window" title="新增字典" iconCls="icon-save" style="width:500px;height:200px;padding:5px;">
+		 <form id="ff" method="post" novalidate>
+	        <div>
+	            <label for="dict_type_code">字典代码:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_type_code" required="true"></input>
+	        </div>
+	        <div>
+	            <label for="dict_type_name">字典名称:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_type_name" required="true"></input>
+	        </div>
+	        <div>
+	            <label for="dict_item_code">序列代码:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_item_code"></input>
+	        </div>
+	        <div>
+	            <label for="dict_item_name">序列名称:</label>
+	            <textarea name="dict_item_name" style="height:60px;"></textarea>
+	        </div>
+	        <div>
+	            <label for="dict_enable">是否使用:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_enable"></input>
+				
+	        </div>
+	          <div>
+	            <label for="dict_memo">模板名称:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_memo"></input>
+				
+	        </div>
+	        <div>
+	            <input type="submit" value="提交">
+	        </div>
+	    </form>
+	</div>
+	
+	
+	 <div id="u" class="easyui-window" title="修改字典" iconCls="icon-save" style="width:500px;height:200px;padding:5px;">
+		 <form id="update" method="post" novalidate>
+		 <input class="easyui-validatebox" type="hidden" name="dict_id" ></input>
+	        <div>
+	            <label for="dict_type_code">字典代码:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_type_code" required="true"></input>
+	        </div>
+	        <div>
+	            <label for="dict_type_name">字典名称:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_type_name" required="true"></input>
+	        </div>
+	        <div>
+	            <label for="dict_item_code">序列代码:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_item_code"></input>
+	        </div>
+	        <div>
+	            <label for="dict_item_name">序列名称:</label>
+	            <textarea name="dict_item_name" style="height:60px;"></textarea>
+	        </div>
+	        <div>
+	            <label for="dict_enable">是否使用:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_enable"></input>
+				
+	        </div>
+	          <div>
+	            <label for="dict_memo">模板名称:</label>
+	            <input class="easyui-validatebox" type="text" name="dict_memo"></input>
+				
+	        </div>
+	        <div>
+	            <input type="submit" value="提交">
+	        </div>
+	    </form>
+	</div>
+	<div id="d" class="easyui-window" title="删除字典" iconCls="icon-remove" style="width:300px;height:200px;padding:5px;">
+	    <div class="easyui-layout" fit="true">
+			<div region="center" border="false" style="padding:10px;background:#fff;border:1px solid #ccc;">
+				你确定要删除这些数据吗？
+			
+			</div>
+			<div region="south" border="false" style="text-align:right;padding:5px 0;">
+				<a class="easyui-linkbutton" iconCls="icon-ok" href="javascript:void(0)" onclick="deletes()">确认删除</a>
+				<a class="easyui-linkbutton" iconCls="icon-cancel" href="javascript:void(0)" onclick="canscal()">取消</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
